@@ -1,10 +1,15 @@
 #!/bin/bash
 
 # 压测脚本模板中设定的压测时间应为300秒
-import os
-from time import sleep
+import os,time
+import platform
 
-def test_demo():
+def report_time():
+    report_time=time.strftime('%Y_%m_%d_%H_%M',time.localtime())
+    return report_time
+
+def test_windows_demo():
+    '''windows下执行jmeter'''
     jmx_template="login"
     suffix=".jmx"
     jmx_template_filename=jmx_template+suffix
@@ -15,13 +20,14 @@ def test_demo():
     print( "自动化压测开始")
 
     # 压测并发数列表
-    thread_time=300
+    thread_time=60
     thread_number_array=[10, 20, 40, 80, 150, 300]
+    get_report_time=report_time()
     for num in thread_number_array:
         # 生成对应压测线程的jmx文件
         jmx_filename="{}_{}{}".format(jmx_template,num,suffix)
         jtl_filename="test_{}.jtl".format(num)
-        web_report_path_name="web_{}".format(num)
+        web_report_path_name="{}_report_concurrent{}".format(get_report_time,num)
 
         os.system('del {} {}'.format(jmx_filename,jtl_filename))
 
@@ -45,8 +51,19 @@ def test_demo():
 
     print( "自动化压测全部结束")
 
+def test_linux_demo():
+    '''linux下执行jmeter脚本'''
+    os.system('/bin/bash auto_login_test.sh')
+
+def test_jmeter():
+    sys=platform.system()
+    if sys=="Windows":
+        test_windows_demo()
+    else:
+        test_linux_demo()
+
 
 
 if __name__ == '__main__':
-   test_demo()
+   test_jmeter()
 
