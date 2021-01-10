@@ -126,7 +126,7 @@ server_internal_error_data = {
 UPLOAD_FOLDER = 'upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 basedir = os.path.abspath(os.path.dirname(__file__))
-ALLOWED_EXTENSIONS = set(['txt', 'png', 'jpg', 'xls', 'JPG', 'PNG', 'xlsx', 'gif', 'GIF', 'doc', 'docx', 'ppt', 'pptx'])
+ALLOWED_EXTENSIONS = set(['csv','txt', 'png', 'jpg', 'xls', 'JPG', 'PNG', 'xlsx', 'gif', 'GIF', 'doc', 'docx', 'ppt', 'pptx'])
 
 
 @app.route("/api/v1/user/login", methods=['POST'])
@@ -333,7 +333,7 @@ def api_upload():
 
 
 if __name__ == "__main__":
-    app.run(port=9091, debug=True, host='0.0.0.0')
+    app.run(port=9091, debug=True, host='127.0.0.1')
 
     # Demo for https, password = 1234
     # app.run('0.0.0.0', debug=True, port=8100, ssl_context=(f'{os.path.abspath(os.curdir)}/cert_files/server.crt'
